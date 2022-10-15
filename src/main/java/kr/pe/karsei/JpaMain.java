@@ -1,9 +1,6 @@
 package kr.pe.karsei;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.util.List;
 
 public class JpaMain {
@@ -26,7 +23,9 @@ public class JpaMain {
             //sameEntity(em);
             //lazyCreate(em);
             //dirtyCheck(em);
-            doFlush(em);
+            //doFlush(em);
+            //flushJpql(em);
+            doDetach(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -126,5 +125,32 @@ public class JpaMain {
         Member member = new Member(4L, "doFlush");
         em.persist(member);
         em.flush();
+    }
+
+    private static void flushJpql(EntityManager em) {
+        Member memberX = new Member(4L, "memberX");
+        Member memberY = new Member(5L, "memberY");
+        Member memberZ = new Member(6L, "memberZ");
+        em.persist(memberX);
+        em.persist(memberY);
+        em.persist(memberZ);
+
+        // 위의 persist 된 것들까지 반영되기 위해 JPQL 을 사용할 경우 flush 를 무조건 하고 아래를 실행한다.
+        Query query = em.createQuery("select m from Member as m");
+        query.getResultList();
+    }
+
+    private static void doDetach(EntityManager em) {
+        Member member = em.find(Member.class, 1L);
+        member.setName("memberAAA");
+
+        // 준영속으로 전환
+        em.detach(member);
+        // 아예 영속 컨텍스트를 비운다.
+        //em.clear();
+        // 영속 컨텍스트를 종료한다.
+        //em.close();
+
+        // 나중에 SELECT 쿼리만 실행되고 UPDATE 쿼리는 실행되지 않는다.
     }
 }
