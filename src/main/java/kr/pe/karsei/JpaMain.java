@@ -103,6 +103,8 @@ public class JpaMain {
         em.persist(memberA);
         em.persist(memberB);
 
+        System.out.println("==============");
+
         // 나중에 트랜잭션 commit 을 하게 될 때 최종적으로 DB 로 위 Entity 들의 INSERT 가 실행된다.
     }
 }
