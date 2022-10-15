@@ -23,7 +23,8 @@ public class JpaMain {
             //crud(em);
             //jpql(em);
             //persistStatus(em);
-            sameEntity(em);
+            //sameEntity(em);
+            lazyCreate(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -92,5 +93,16 @@ public class JpaMain {
         Member member2 = em.find(Member.class, 1L); // Cache
 
         System.out.println("result = " + (member1 == member2));
+    }
+
+    private static void lazyCreate(EntityManager em) {
+        Member memberA = new Member(101L, "memberA");
+        Member memberB = new Member(102L, "memberB");
+
+        // 1차 캐시에는 우선 쌓이게 되지만 바로 INSERT 가 실행되지는 않는다.
+        em.persist(memberA);
+        em.persist(memberB);
+
+        // 나중에 트랜잭션 commit 을 하게 될 때 최종적으로 DB 로 위 Entity 들의 INSERT 가 실행된다.
     }
 }
