@@ -24,7 +24,9 @@ public class JpaMain {
             //jpql(em);
             //persistStatus(em);
             //sameEntity(em);
-            lazyCreate(em);
+            //lazyCreate(em);
+            //dirtyCheck(em);
+            doFlush(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -106,5 +108,23 @@ public class JpaMain {
         System.out.println("==============");
 
         // 나중에 트랜잭션 commit 을 하게 될 때 최종적으로 DB 로 위 Entity 들의 INSERT 가 실행된다.
+    }
+
+    private static void dirtyCheck(EntityManager em) {
+        Member member = em.find(Member.class, 1L); // SQL
+        member.setName("memberrrrrrrrA");
+
+        // 하지 않아도 변경이 된다. (마치 자바 컬렉션처럼 되도록)
+        // 트랜잭션 커밋 시 flush 되면서 스냅샷과 entity 를 서로 비교하여 변경된 값에 대해 UPDATE 문을 만들고 다시 실행하여 flush 를 통해 DB 업데이트를 한다.
+        // flush -> 영속성 컨텍스트 변경 내용을 DB 에 반영하는 것을 말한다.
+        //em.persist(member);
+
+        System.out.println("==============");
+    }
+
+    private static void doFlush(EntityManager em) {
+        Member member = new Member(4L, "doFlush");
+        em.persist(member);
+        em.flush();
     }
 }
