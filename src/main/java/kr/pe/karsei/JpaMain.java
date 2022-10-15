@@ -22,7 +22,8 @@ public class JpaMain {
         try {
             //crud(em);
             //jpql(em);
-            persistStatus(em);
+            //persistStatus(em);
+            sameEntity(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -84,5 +85,12 @@ public class JpaMain {
 
         // 삭제 (DB 까지해서 전부 삭제)
         em.remove(member);
+    }
+
+    private static void sameEntity(EntityManager em) {
+        Member member1 = em.find(Member.class, 1L); // SQL
+        Member member2 = em.find(Member.class, 1L); // Cache
+
+        System.out.println("result = " + (member1 == member2));
     }
 }
