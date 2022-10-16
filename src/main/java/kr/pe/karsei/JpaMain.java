@@ -25,7 +25,8 @@ public class JpaMain {
             //dirtyCheck(em);
             //doFlush(em);
             //flushJpql(em);
-            doDetach(em);
+            //doDetach(em);
+            createMember2(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -152,5 +153,14 @@ public class JpaMain {
         //em.close();
 
         // 나중에 SELECT 쿼리만 실행되고 UPDATE 쿼리는 실행되지 않는다.
+    }
+
+    private static void createMember2(EntityManager em) {
+        MemberV2 member = new MemberV2();
+        member.setId(1L);
+        member.setUsername("testMember");
+        member.setRoleType(RoleType.USER);
+
+        em.persist(em);
     }
 }
