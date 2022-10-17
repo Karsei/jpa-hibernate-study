@@ -17,7 +17,8 @@ public class Team {
 
     private String name;
 
-    @OneToMany(mappedBy = "team") // Member 의 team 변수
+    @OneToMany
+    @JoinColumn(name = "TEAM_ID")
     private List<Member1> members = new ArrayList<>();
 
     @Override

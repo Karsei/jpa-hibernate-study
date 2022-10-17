@@ -23,10 +23,12 @@ public class JpaMain {
         tx.begin();
 
         try {
+            // 일대다 관련 시나리오 예시
             //checkManyToOne(em);
             //checkOneToMany(em);
             //checkOneToManyCaution(em);
-            checkOneToManyCaution2(em);
+            //checkOneToManyCaution2(em);
+            //oneToMany(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -117,5 +119,16 @@ public class JpaMain {
             System.out.println("m = " + m.getName());
         }
         System.out.println("================");
+    }
+
+    private static void oneToMany(EntityManager em) {
+        Member1 member = new Member1();
+        member.setName("member1");
+        em.persist(member);
+
+        Team team = new Team();
+        team.setName("teamA");
+        team.getMembers().add(member);
+        em.persist(team);
     }
 }

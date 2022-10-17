@@ -16,9 +16,14 @@ public class Member1 {
     @Column(name = "USERNAME")
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "TEAM_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "TEAM_ID")
+    @Transient
     private Team team;
+
+    @OneToOne
+    @JoinColumn(name = "LOCKER_ID")
+    private Locker locker;
 
     public void changeTeam(Team team) {
         this.team = team;
