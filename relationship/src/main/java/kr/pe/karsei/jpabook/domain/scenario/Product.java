@@ -1,4 +1,4 @@
-package kr.pe.karsei.jpabook.domain.scenario1;
+package kr.pe.karsei.jpabook.domain.scenario;
 
 import javax.persistence.*;
 import java.util.ArrayList;

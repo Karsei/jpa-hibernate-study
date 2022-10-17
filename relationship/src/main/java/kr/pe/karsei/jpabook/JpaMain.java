@@ -1,7 +1,7 @@
 package kr.pe.karsei.jpabook;
 
-import kr.pe.karsei.jpabook.domain.scenario1.Member1;
-import kr.pe.karsei.jpabook.domain.scenario1.Team;
+import kr.pe.karsei.jpabook.domain.scenario.Member1;
+import kr.pe.karsei.jpabook.domain.scenario.Team;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
