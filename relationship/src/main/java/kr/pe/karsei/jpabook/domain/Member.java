@@ -1,5 +1,6 @@
 package kr.pe.karsei.jpabook.domain;
 
+import kr.pe.karsei.jpabook.CheckOneToMany;
 import lombok.Getter;
 import lombok.Setter;
 
