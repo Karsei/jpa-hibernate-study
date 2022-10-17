@@ -7,6 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -22,7 +23,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-            checkManyToOne(em);
+            //checkManyToOne(em);
+            //checkOneToMany(em);
+            //checkOneToManyCaution(em);
+            checkOneToManyCaution2(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -54,5 +58,64 @@ public class JpaMain {
         Member1 findMember = em.find(Member1.class, member1.getId());
         Team findTeam = findMember.getTeam();
         System.out.println("findTeam = " + findTeam.getName());
+    }
+
+    private static void checkOneToMany(EntityManager em) {
+        Team team = new Team();
+        team.setName("teamA");
+        em.persist(team);
+
+        Member1 member1 = new Member1();
+        member1.setName("member1");
+        member1.setTeam(team);
+        em.persist(member1);
+
+        em.flush();
+        em.clear();
+
+        Member1 findMember = em.find(Member1.class, member1.getId());
+        List<Member1> members = findMember.getTeam().getMembers();
+        for (Member1 member : members) {
+            System.out.println("member = " + member.getName());
+        }
+    }
+
+    private static void checkOneToManyCaution(EntityManager em) {
+        Member1 member1 = new Member1();
+        member1.setName("member1");
+        em.persist(member1);
+
+        Team team = new Team();
+        team.setName("teamA");
+        team.getMembers().add(member1);
+        em.persist(team);
+
+        em.flush();
+        em.clear();
+    }
+
+    private static void checkOneToManyCaution2(EntityManager em) {
+        Team team = new Team();
+        team.setName("teamA");
+        em.persist(team);
+
+        Member1 member1 = new Member1();
+        member1.setName("member1");
+        member1.changeTeam(team);
+        em.persist(member1);
+
+        //team.getMembers().add(member1); // Entity 에다가 추가
+
+        //em.flush();
+        //em.clear();
+
+        Team findTeam = em.find(Team.class, team.getId()); // 1차 캐시
+        List<Member1> members = findTeam.getMembers();
+        
+        System.out.println("================");
+        for (Member1 m : members) {
+            System.out.println("m = " + m.getName());
+        }
+        System.out.println("================");
     }
 }

@@ -16,10 +16,21 @@ public class Member1 {
     @Column(name = "USERNAME")
     private String name;
 
-    //@Column(name = "TEAM_ID")
-    //private Long teamId;
-
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team team;
+
+    public void changeTeam(Team team) {
+        this.team = team;
+        team.getMembers().add(this);
+    }
+
+    @Override
+    public String toString() {
+        return "Member1{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", team=" + team +
+                '}';
+    }
 }
