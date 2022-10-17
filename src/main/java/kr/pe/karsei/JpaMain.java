@@ -26,7 +26,8 @@ public class JpaMain {
             //doFlush(em);
             //flushJpql(em);
             //doDetach(em);
-            createMember2(em);
+            //createMember2(em);
+            createMemberWithSequenceTest(em);
 
             // 트랜잭션 - 종료
             tx.commit();
@@ -157,10 +158,23 @@ public class JpaMain {
 
     private static void createMember2(EntityManager em) {
         MemberV2 member = new MemberV2();
-        member.setId(1L);
+        member.setId(11L);
         member.setUsername("testMember");
         member.setRoleType(RoleType.USER);
 
         em.persist(em);
+    }
+
+    private static void createMemberWithSequenceTest(EntityManager em) {
+        Member memberA = new Member();
+        memberA.setName("A");
+        Member memberB = new Member();
+        memberB.setName("B");
+        Member memberC = new Member();
+        memberC.setName("C");
+
+        em.persist(memberA); // 1, 51
+        em.persist(memberB); // MEM
+        em.persist(memberC); // MEM
     }
 }
