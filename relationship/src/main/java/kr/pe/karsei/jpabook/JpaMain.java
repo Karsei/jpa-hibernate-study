@@ -1,5 +1,8 @@
 package kr.pe.karsei.jpabook;
 
+import kr.pe.karsei.jpabook.domain.scenario1.Member1;
+import kr.pe.karsei.jpabook.domain.scenario1.Team;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -19,6 +22,8 @@ public class JpaMain {
         tx.begin();
 
         try {
+            checkManyToOne(em);
+
             // 트랜잭션 - 종료
             tx.commit();
         }
@@ -31,5 +36,23 @@ public class JpaMain {
         }
 
         emf.close();
+    }
+
+    private static void checkManyToOne(EntityManager em) {
+        Team team = new Team();
+        team.setName("teamA");
+        em.persist(team);
+
+        Member1 member1 = new Member1();
+        member1.setName("member1");
+        member1.setTeam(team);
+        em.persist(member1);
+
+        em.flush();
+        em.clear();
+
+        Member1 findMember = em.find(Member1.class, member1.getId());
+        Team findTeam = findMember.getTeam();
+        System.out.println("findTeam = " + findTeam.getName());
     }
 }
