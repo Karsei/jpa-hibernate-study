@@ -5,6 +5,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
+import static kr.pe.karsei.jpabook.CheckInheritance.*;
 import static kr.pe.karsei.jpabook.CheckManyToOne.*;
 import static kr.pe.karsei.jpabook.CheckOneToMany.*;
 
@@ -23,11 +24,15 @@ public class JpaMain {
 
         try {
             // 일대다 관련 시나리오 예시
-            checkManyToOne(em);
-            checkOneToMany(em);
-            checkOneToManyCaution(em);
-            checkOneToManyCaution2(em);
-            oneToMany(em);
+            //checkManyToOne(em);
+            //checkOneToMany(em);
+            //checkOneToManyCaution(em);
+            //checkOneToManyCaution2(em);
+            //oneToMany(em);
+
+            // 상속
+            //inheritance(em);
+            inheritanceTablePerClassUnion(em);
 
             // 트랜잭션 - 종료
             tx.commit();
