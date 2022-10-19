@@ -1,11 +1,10 @@
 package kr.pe.karsei.jpabook;
 
 import kr.pe.karsei.jpabook.domain.Book;
+import kr.pe.karsei.jpabook.domain.Member;
+import org.hibernate.Hibernate;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 import static kr.pe.karsei.jpabook.CheckInheritance.*;
 import static kr.pe.karsei.jpabook.CheckManyToOne.*;
@@ -36,17 +35,41 @@ public class JpaMain {
             //inheritance(em);
             //inheritanceTablePerClassUnion(em);
 
+            // 프록시
+            proxy(emf, em);
+
             // 트랜잭션 - 종료
             tx.commit();
         }
         catch (Exception e) {
             // 트랜잭션 - 롤백
             tx.rollback();
+            e.printStackTrace();
         }
         finally {
             em.close();
         }
 
         emf.close();
+    }
+
+    private static void proxy(EntityManagerFactory emf, EntityManager em) {
+        Member member = new Member();
+        member.setName("hi");
+        em.persist(member);
+
+        em.flush();
+        em.clear();
+
+        Member ref = em.getReference(Member.class, member.getId());
+        System.out.println("ref = " + ref.getClass()); // Proxy
+
+        // 프록시의 초기화를 안했기 때문에 false 
+        System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(ref));
+        ref.getName(); // SELECT 실행
+        // 프록시의 초기화를 했기 때문에 true 
+        System.out.println("isLoaded = " + emf.getPersistenceUnitUtil().isLoaded(ref));
+        // 강제 초기화 (사실, JPA 표준에는 강제 초기화가 없다)
+        Hibernate.initialize(ref);
     }
 }
