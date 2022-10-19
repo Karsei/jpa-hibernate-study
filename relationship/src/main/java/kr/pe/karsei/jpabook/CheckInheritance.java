@@ -1,7 +1,7 @@
 package kr.pe.karsei.jpabook;
 
 import kr.pe.karsei.jpabook.domain.Item;
-import kr.pe.karsei.jpabook.domain.scenario2.Movie;
+import kr.pe.karsei.jpabook.domain.Movie;
 
 import javax.persistence.EntityManager;
 
