@@ -1,5 +1,7 @@
 package kr.pe.karsei.jpabook;
 
+import kr.pe.karsei.jpabook.domain.Book;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -32,7 +34,7 @@ public class JpaMain {
 
             // 상속
             //inheritance(em);
-            inheritanceTablePerClassUnion(em);
+            //inheritanceTablePerClassUnion(em);
 
             // 트랜잭션 - 종료
             tx.commit();
