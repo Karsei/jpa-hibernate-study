@@ -46,7 +46,7 @@ public class JpaMain {
 
             // cascade
             //cascade(em);
-            orphan(em);
+            //orphan(em);
 
             // 트랜잭션 - 종료
             tx.commit();
