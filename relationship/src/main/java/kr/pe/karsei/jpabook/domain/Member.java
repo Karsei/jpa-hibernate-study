@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,9 +21,10 @@ public class Member {
 
     private String name;
 
+    private LocalDateTime startDate;
+    private LocalDateTime endDate;
+
     private String city;
-
     private String street;
-
     private String zipcode;
 }
