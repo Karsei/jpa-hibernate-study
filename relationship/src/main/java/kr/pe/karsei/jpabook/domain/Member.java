@@ -16,15 +16,11 @@ public class Member {
     @Column(name = "MEMBER_ID")
     private Long id;
 
-    @OneToMany(mappedBy = "member")
-    private List<Order> orders = new ArrayList<>();
-
     private String name;
 
-    private LocalDateTime startDate;
-    private LocalDateTime endDate;
+    @Embedded
+    private Address address;
 
-    private String city;
-    private String street;
-    private String zipcode;
+    @OneToMany(mappedBy = "member")
+    private List<Order> orders = new ArrayList<>();
 }

@@ -50,7 +50,7 @@ public class JpaMain {
 
             // Embedded
             //embeddedWarning(em);
-            valueTypeMapping(em);
+            //valueTypeMapping(em);
 
             // 트랜잭션 - 종료
             tx.commit();
