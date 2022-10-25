@@ -1,4 +1,4 @@
-package kr.pe.karsei.jpqlstudy;
+package kr.pe.karsei.jpqlstudy.domain;
 
 import lombok.Getter;
 import lombok.Setter;

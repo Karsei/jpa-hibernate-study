@@ -1,4 +1,4 @@
-package kr.pe.karsei.jpqlstudy;
+package kr.pe.karsei.jpqlstudy.domain;
 
 import javax.persistence.*;
 

@@ -1,4 +1,4 @@
-package kr.pe.karsei.jpqlstudy;
+package kr.pe.karsei.jpqlstudy.domain;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -19,4 +19,13 @@ public class Team {
 
     @OneToMany(mappedBy = "team")
     private List<Member> members = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Team{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                //", members=" + members +
+                '}';
+    }
 }
