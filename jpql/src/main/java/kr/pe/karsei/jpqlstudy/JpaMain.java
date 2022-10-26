@@ -88,6 +88,20 @@ public class JpaMain {
             List<Member> joinList = em.createQuery(joinQuery, Member.class)
                     .getResultList();
 
+            // CASE-WHEN
+            String query = """
+                    select
+                        case when m.age <= 10 then '어린이'
+                             when m.age >= 60 then '경로'
+                             else '일반'
+                        end
+                    from Member m
+                    """;
+            List<String> caseWhenList = em.createQuery(query, String.class).getResultList();
+            for (String s : caseWhenList) {
+                System.out.println("s = " + s);
+            }
+
             tx.commit();
         }
         catch (Exception e) {
