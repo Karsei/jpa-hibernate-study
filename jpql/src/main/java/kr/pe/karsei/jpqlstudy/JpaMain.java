@@ -28,10 +28,17 @@ public class JpaMain {
                 Member member = new Member();
                 member.setUsername("member" + i);
                 member.setAge(i);
-                if (i % 7 == 0) member.setTeam(teamA);
-                if (i % 11 == 0) member.setTeam(teamB);
+                if (i % 7 == 0) member.changeTeam(teamA);
+                if (i % 11 == 0) member.changeTeam(teamB);
                 em.persist(member);
             }
+            Member memberSample = new Member();
+            memberSample.setUsername("specialMember");
+            memberSample.setAge(17);
+            em.persist(memberSample);
+
+            em.flush();
+            em.clear();
 
             //checkQueryAndTypedQuery(em);
             //checkBinding(em);
@@ -41,7 +48,9 @@ public class JpaMain {
             //checkCaseWhen(em);
             //checkFetchJoin(em);
             //checkFetchJoinWithCollection(em);
-            checkFetchJoinWithPaging(em);
+            //checkFetchJoinWithPaging(em);
+
+            checkEntityDirectUsage(em, memberSample, teamA);
 
             tx.commit();
         }

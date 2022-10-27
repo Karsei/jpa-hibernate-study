@@ -34,11 +34,10 @@ public class Advanced {
     }
 
     public static void checkFetchJoinWithPaging(EntityManager em) {
-        // Collection Fetch Join
         String pagingQuery = "select t FROM Team t";
         List<Team> pagingQueryList = em.createQuery(pagingQuery, Team.class)
                 .setFirstResult(0)
-                .setMaxResults(3)
+                .setMaxResults(2)
                 .getResultList();
 
         System.out.println("result = " + pagingQueryList.size());
@@ -48,6 +47,26 @@ public class Advanced {
             for (Member member : team.getMembers()) {
                 System.out.println("--> member = " + member);
             }
+        }
+    }
+
+    public static void checkEntityDirectUsage(EntityManager em, Member sampleMember, Team sampleTeam) {
+        // 기본
+        String query = "select m FROM Member m where m = :member";
+        Member findMember = em.createQuery(query, Member.class)
+                .setParameter("member", sampleMember)
+                .getSingleResult();
+
+        System.out.println("findMember = " + findMember);
+
+        // 외래
+        String query2 = "select m FROM Member m where m.team = :team";
+        List<Member> findmembers = em.createQuery(query2, Member.class)
+                .setParameter("team", sampleTeam)
+                .getResultList();
+
+        for (Member member : findmembers) {
+            System.out.println("members = " + member);
         }
     }
 }
