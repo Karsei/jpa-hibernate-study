@@ -49,8 +49,8 @@ public class JpaMain {
             //checkFetchJoin(em);
             //checkFetchJoinWithCollection(em);
             //checkFetchJoinWithPaging(em);
-
-            checkEntityDirectUsage(em, memberSample, teamA);
+            //checkEntityDirectUsage(em, memberSample, teamA);
+            checkNamedQuery(em);
 
             tx.commit();
         }

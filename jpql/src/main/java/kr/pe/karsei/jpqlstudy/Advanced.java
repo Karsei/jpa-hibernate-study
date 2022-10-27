@@ -69,4 +69,12 @@ public class Advanced {
             System.out.println("members = " + member);
         }
     }
+
+    public static void checkNamedQuery(EntityManager em) {
+        Member result = em.createNamedQuery("Member.findByUsername", Member.class)
+                .setParameter("username", "specialMember")
+                .getSingleResult();
+
+        System.out.println("result = " + result);
+    }
 }
