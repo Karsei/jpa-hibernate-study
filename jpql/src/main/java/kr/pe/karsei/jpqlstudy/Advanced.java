@@ -77,4 +77,22 @@ public class Advanced {
 
         System.out.println("result = " + result);
     }
+
+    public static void checkBulkUpdate(EntityManager em, Member sampleMember) {
+        int resultCount = em.createQuery("update Member m set m.age = 20")
+                .executeUpdate();
+
+        System.out.println("resultCount = " + resultCount);
+
+        // 트랜잭션 커밋하기 전에 위의 Member 들을 조회하면 age 는 0으로 되어 있고
+        // 반영이 되지 않은 데이터를 가져오므로 주의해야 한다.
+        System.out.println("sampleMember = " + sampleMember.getAge()); // 0
+        Member findMember = em.find(Member.class, sampleMember.getId());
+        System.out.println("findMember = " + findMember.getAge()); // 0
+
+        // 영속성 컨텍스트를 비워주어야 비로소 제대로 가져온다.
+        em.clear();
+        Member findMember2 = em.find(Member.class, sampleMember.getId());
+        System.out.println("findMember = " + findMember2.getAge()); // 20
+    }
 }
